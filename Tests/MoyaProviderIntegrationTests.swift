@@ -228,38 +228,6 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                         expect(calledTarget) == target
                     }
                 }
-
-                describe("a provider with network logger plugin") {
-                    var log = ""
-                    var plugin: NetworkLoggerPlugin!
-                    beforeEach {
-                        log = ""
-
-                        plugin = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
-                            //mapping the Any... from items to a string that can be compared
-                            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
-                            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-                            log += string
-                        })
-                    }
-
-                    it("logs the request") {
-
-                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
-                        waitUntil { done in
-                            provider.request(.zen) { _ in done() }
-                        }
-
-                        expect(log).to( contain("Request:") )
-                        expect(log).to( contain("{ URL: https://api.github.com/zen }") )
-                        expect(log).to( contain("Request Headers: [:]") )
-                        expect(log).to( contain("HTTP Request Method: GET") )
-                        expect(log).to( contain("Response:") )
-                        expect(log).to( contain("{ URL: https://api.github.com/zen }") )
-                        expect(log).to( contain("{ Status Code: 200, Headers") )
-                        expect(log).to( contain("\"Content-Length\"") )
-                    }
-                }
             }
 
             describe("a reactive provider with SignalProducer") {
