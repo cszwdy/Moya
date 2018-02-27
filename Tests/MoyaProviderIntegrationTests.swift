@@ -257,7 +257,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                         expect(log).to( contain("Response:") )
                         expect(log).to( contain("{ URL: https://api.github.com/zen }") )
                         expect(log).to( contain("{ Status Code: 200, Headers") )
-                        expect(log).to( contain("\"Content-Length\"MoyaProviderSpec.swift:871") )
+                        expect(log).to( contain("\"Content-Length\"") )
                     }
                 }
             }
